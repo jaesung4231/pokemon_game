@@ -1,7 +1,12 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
+
 canvas.width = 1024;
 canvas.height = 576;
+const collisonsMap = [];
+for (let i = 0; i < collisons.length; i += 70) {
+  collisonsMap.push(collisons.slice(i, i + 70));
+}
 
 c.fillStyle = "white";
 c.fillRect(0, 0, canvas.width, canvas.height);
@@ -87,7 +92,7 @@ window.addEventListener("keydown", (e) => {
       lastKey = "d";
       break;
   }
-  //   console.log(keys);
+  // console.log(keys);
 });
 
 window.addEventListener("keyup", (e) => {
