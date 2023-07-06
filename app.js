@@ -9,25 +9,12 @@ for (let i = 0; i < collisons.length; i += 70) {
   collisonsMap.push(collisons.slice(i, i + 70));
 }
 
-class Boundary {
-  static width = 48;
-  static height = 48;
-  constructor({ position }) {
-    this.position = position;
-    this.width = 48;
-    this.height = 48;
-  }
-  draw() {
-    c.fillStyle = "red";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
-  }
-}
-
 const boundaries = [];
 const offset = {
   x: -740,
   y: -650,
 };
+
 collisonsMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
     if (symbol === 1025)
@@ -51,30 +38,8 @@ image.src = "./Pellet Town.png";
 const playerImage = new Image();
 playerImage.src = "./images/playerDown.png";
 
-class Sprite {
-  constructor({ position, velocity, image, frames = { max: 1 } }) {
-    this.position = position;
-    this.image = image;
-    this.frames = frames;
-    this.image.onload = () => {
-      this.width = this.image.width / this.frames.max;
-      this.height = this.image.height;
-    };
-  }
-  draw() {
-    c.drawImage(
-      this.image,
-      0,
-      0,
-      this.image.width / this.frames.max,
-      this.image.height,
-      this.position.x,
-      this.position.y,
-      this.image.width / this.frames.max,
-      this.image.height
-    );
-  }
-}
+const foregroundImage = new Image();
+foregroundImage.src = "./images/Fground.png";
 
 // canvas.width / 2 - playerImage.width / 4 / 2,
 // canvas.height / 2 - playerImage.height / 2,
@@ -98,6 +63,14 @@ const background = new Sprite({
   image: image,
 });
 
+const foreground = new Sprite({
+  position: {
+    x: offset.x,
+    y: offset.y,
+  },
+  image: foregroundImage,
+});
+
 const keys = {
   w: {
     pressed: false,
@@ -113,7 +86,7 @@ const keys = {
   },
 };
 
-const moveables = [background, ...boundaries];
+const moveables = [background, ...boundaries, foreground];
 
 function rectangularCollision({ rec1, rec2 }) {
   return (
@@ -131,6 +104,7 @@ function animate() {
     boundary.draw();
   });
   player.draw();
+  foreground.draw();
   let moving = true;
   if (keys.w.pressed && lastKey === "ArrowUp") {
     for (let i = 0; i < boundaries.length; i++) {
@@ -144,7 +118,6 @@ function animate() {
           },
         })
       ) {
-        console.log("colliding");
         moving = false;
         break;
       }
@@ -165,7 +138,6 @@ function animate() {
           },
         })
       ) {
-        console.log("colliding");
         moving = false;
         break;
       }
@@ -186,7 +158,6 @@ function animate() {
           },
         })
       ) {
-        console.log("colliding");
         moving = false;
         break;
       }
@@ -207,7 +178,6 @@ function animate() {
           },
         })
       ) {
-        console.log("colliding");
         moving = false;
         break;
       }
