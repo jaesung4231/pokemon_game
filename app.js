@@ -35,8 +35,17 @@ collisonsMap.forEach((row, i) => {
 const image = new Image();
 image.src = "./Pellet Town.png";
 
-const playerImage = new Image();
-playerImage.src = "./images/playerDown.png";
+const playerDownImage = new Image();
+playerDownImage.src = "./images/playerDown.png";
+
+const playerUpImage = new Image();
+playerUpImage.src = "./images/playerUp.png";
+
+const playerRightImage = new Image();
+playerRightImage.src = "./images/playerRight.png";
+
+const playerLeftImage = new Image();
+playerLeftImage.src = "./images/playerLeft.png";
 
 const foregroundImage = new Image();
 foregroundImage.src = "./images/Fground.png";
@@ -49,9 +58,15 @@ const player = new Sprite({
     x: canvas.width / 2 - 192 / 4 / 2,
     y: canvas.height / 2 - 68 / 2,
   },
-  image: playerImage,
+  image: playerDownImage,
   frames: {
     max: 4,
+  },
+  sprites: {
+    up: playerUpImage,
+    down: playerDownImage,
+    left: playerLeftImage,
+    right: playerRightImage,
   },
 });
 
@@ -103,10 +118,14 @@ function animate() {
   boundaries.forEach((boundary) => {
     boundary.draw();
   });
+
   player.draw();
   foreground.draw();
   let moving = true;
+  player.moving = false;
   if (keys.w.pressed && lastKey === "ArrowUp") {
+    player.moving = true;
+    player.image = player.sprites.up;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
       if (
@@ -127,6 +146,8 @@ function animate() {
         moveable.position.y += 2;
       });
   } else if (keys.s.pressed && lastKey === "ArrowDown") {
+    player.moving = true;
+    player.image = player.sprites.down;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
       if (
@@ -147,6 +168,8 @@ function animate() {
         moveable.position.y -= 2;
       });
   } else if (keys.a.pressed && lastKey === "ArrowLeft") {
+    player.moving = true;
+    player.image = player.sprites.left;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
       if (
@@ -167,6 +190,8 @@ function animate() {
         moveable.position.x += 2;
       });
   } else if (keys.d.pressed && lastKey === "ArrowRight") {
+    player.moving = true;
+    player.image = player.sprites.right;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
       if (
