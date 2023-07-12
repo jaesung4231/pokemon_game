@@ -126,8 +126,12 @@ function rectangularCollision({ rec1, rec2 }) {
   );
 }
 
+const battle = {
+  initiated: false,
+};
+
 function animate() {
-  window.requestAnimationFrame(animate);
+  const animationID = window.requestAnimationFrame(animate);
   background.draw();
 
   boundaries.forEach((boundary) => {
@@ -140,7 +144,11 @@ function animate() {
 
   player.draw();
   foreground.draw();
+  let moving = true;
+  player.moving = false;
 
+  // console.log(animationID);
+  if (battle.initiated) return;
   if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
@@ -164,13 +172,30 @@ function animate() {
         overlappingArea > (player.width * player.height) / 3 &&
         Math.random() < 0.01
       ) {
-        console.log("battlezone collision");
+        console.log("battle activated");
+        window.cancelAnimationFrame(animationID);
+        battle.initiated = true;
+        gsap.to("#overlappingDiv", {
+          opacity: 1,
+          repeat: 3,
+          yoyo: true,
+          duration: 0.3,
+          onComplete() {
+            gsap.to("#overlappingDiv", {
+              opacity: 1,
+              duration: 0.4,
+            });
+          },
+        });
+        //activate a new animation loop
+        animateBattle();
+        //deactivate current animation loop
+
         break;
       }
     }
   }
-  let moving = true;
-  player.moving = false;
+
   if (keys.w.pressed && lastKey === "ArrowUp") {
     player.moving = true;
     player.image = player.sprites.up;
@@ -264,6 +289,11 @@ function animate() {
 }
 
 animate();
+
+function animateBattle() {
+  window.requestAnimationFrame(animateBattle);
+  console.log("animate Battle");
+}
 
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
