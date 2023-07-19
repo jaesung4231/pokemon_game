@@ -34,7 +34,6 @@ collisonsMap.forEach((row, i) => {
 });
 
 const battleZones = [];
-
 battleZoneMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
     if (symbol === 1025)
@@ -184,6 +183,13 @@ function animate() {
             gsap.to("#overlappingDiv", {
               opacity: 1,
               duration: 0.4,
+              onComplete() {
+                animateBattle();
+                gsap.to("#overlappingDiv", {
+                  opacity: 0,
+                  duration: 0.4,
+                });
+              },
             });
           },
         });
@@ -290,9 +296,19 @@ function animate() {
 
 animate();
 
+const battleBackgroundImage = new Image();
+battleBackgroundImage.src = "./images/battleBackground.png";
+const battleBackground = new Sprite({
+  position: {
+    x: 0,
+    y: 0,
+  },
+  image: battleBackgroundImage,
+});
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
-  console.log("animate Battle");
+  battleBackground.draw();
 }
 
 let lastKey = "";
