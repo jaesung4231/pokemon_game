@@ -175,7 +175,6 @@ function animate() {
         console.log("battle activated");
         window.cancelAnimationFrame(animationID);
         battle.initiated = true;
-        // 코드 리팩토링 시도할 부분
         gsap.to("#overlappingDiv", {
           opacity: 1,
           repeat: 3,
