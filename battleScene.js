@@ -35,8 +35,6 @@ const queue = [];
 // event listeners for battle (attack)
 document.querySelectorAll("button").forEach((button) => {
   button.addEventListener("click", (e) => {
-    console.log(e.currentTarget.innerHTML);
-    console.log(attacks[e.currentTarget.innerHTML]);
     const selectedAttack = attacks[e.currentTarget.innerHTML];
     emby.attack({
       attack: selectedAttack,
@@ -44,13 +42,22 @@ document.querySelectorAll("button").forEach((button) => {
       renderedSprites,
     });
 
+    const randomAttack =
+      draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)];
+
     queue.push(() => {
       draggle.attack({
-        attack: attacks.Tackle,
+        attack: randomAttack,
         recipient: emby,
         renderedSprites,
       });
     });
+  });
+
+  button.addEventListener("mouseenter", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
+    document.querySelector("#attackType").innerHTML = selectedAttack.type;
+    document.querySelector("#attackType").style.color = selectedAttack.color;
   });
 });
 
