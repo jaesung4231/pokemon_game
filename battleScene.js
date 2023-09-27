@@ -26,6 +26,8 @@ function afterFaint(queue) {
           opacity: 0,
         });
         battle.initiated = false;
+        audio.victory.stop();
+        audio.Map.play();
       },
     });
   });
@@ -104,10 +106,8 @@ function animateBattle() {
   });
 }
 
-initBattle();
-animateBattle();
-
-// event listeners for battle (attack)
+// initBattle();
+// animateBattle();
 
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   if (queue.length > 0) {
