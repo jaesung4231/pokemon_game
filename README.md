@@ -20,5 +20,10 @@ $\boldsymbol \leftarrow$ : 왼쪽으로 움직이기 <br>
 
 <br>
 <br>
-<img src=".\README_img\battlezone.PNG">
+<img src=".\README_img\battlezone.png">
 빨간색으로 칠한 부분에서 움직이다 보면 몬스터와 만나면서, 전투에 돌입합니다.
+<br>
+<br>
+<br>
+<img src=".\README_img\battle.PNG">
+공격은 번갈아가면서 진행되며, 두 몬스터중 하나가 쓰러질 때까지 계속됩니다.
