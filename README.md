@@ -25,5 +25,6 @@ $\boldsymbol \leftarrow$ : 왼쪽으로 움직이기 <br>
 <br>
 <br>
 <br>
+<br>
 <img src=".\README_img\battle.PNG">
 공격은 번갈아가면서 진행되며, 두 몬스터중 하나가 쓰러질 때까지 계속됩니다.
